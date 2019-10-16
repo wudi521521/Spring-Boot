@@ -27,10 +27,5 @@ public class MainConfig {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void send(Object message, Map<String,Object> propterties) throws Exception{
-        MessageHeaders mhs = new MessageHeaders(propterties);
-        Message msg = MessageBuilder.createMessage(message,mhs);
-        //发送数据
-        rabbitTemplate.convertAndSend("exchange-1","springboot.hello",msg);
-    }
+
 }
