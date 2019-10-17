@@ -1,0 +1,28 @@
+spring:
+  rabbitmq:
+    addresses: 39.107.245.189:5672
+    username: eblocks_dev
+    password: eblocks2018@china.com
+    virtual-host: /
+    connection-timeout: 15000ms
+    publisher-confirms: true  #实现一个监听器用于监听Broker端给我们返回一个确认请求
+    publisher-returns: true  #监听Broker信息到达queue
+    template:
+      mandatory: true #在发送消息的时候对template进行配置mandatory=true保证监听有效
+    listener:
+          direct:
+            acknowledge-mode: manual #manual 手动确认 ,auto 自动确认,none 不确认list
+          simple:
+            max-concurrency: 10 #最大并发消费数量
+            concurrency: 5 #并发数量
+##消费端的处理
+          order:
+            queue:
+              name: queue-order
+              durable: true
+            exchange:
+              name: exchange-order
+              durable: true
+              type: topic
+              ignoreDeclarationExceptions: true
+            key: springboot.order

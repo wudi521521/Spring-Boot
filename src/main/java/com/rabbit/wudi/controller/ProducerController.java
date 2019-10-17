@@ -1,6 +1,7 @@
 package com.rabbit.wudi.controller;
 
 
+import com.rabbit.wudi.entity.Order;
 import com.rabbit.wudi.producer.RabbitSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,15 @@ public class ProducerController {
         properties.put("number",12345);
         properties.put("date",new Date());
         rabbitSender.send("Hello AMQP For Spring Boot",properties);
+    }
+
+    /**
+     * spring boot 发送实体测试
+     * @throws Exception
+     */
+    @RequestMapping("/order")
+    public void testOrderSend() throws Exception{
+        Order order = new Order("2323","order实体");
+         rabbitSender.orderSend(order,null);
     }
 }
