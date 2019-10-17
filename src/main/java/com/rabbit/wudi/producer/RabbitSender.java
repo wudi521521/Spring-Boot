@@ -52,7 +52,7 @@ public class RabbitSender {
      final RabbitTemplate.ReturnCallback returnCallback =    new RabbitTemplate.ReturnCallback(){
          @Override
          public void returnedMessage(org.springframework.amqp.core.Message message, int replyCode, String replyText, String exchange, String routingKey) {
-             System.err.println("exchange:"+exchange+"routingKey:"+routingKey);
+             System.err.println("exchange:"+exchange+"   routingKey:"+routingKey);
              //交换器没有路由成功会在该方法进行一个回调处理
          }
      };
@@ -67,9 +67,6 @@ public class RabbitSender {
         correlationData.setId((new Date()).toString());//id+时间戳全局唯一(实际消息的id)
 
         //发送数据
-        //交换器没有和routingKey 绑定到一块
-        //rabbitTemplate.convertAndSend("exchange-1","springboot.hello",msg);
-        //交换器和routingKey 绑定到一块
-        rabbitTemplate.convertAndSend("topic001","spring.#",msg,correlationData);
+        rabbitTemplate.convertAndSend("exchange-boot-1","springboot.001",msg,correlationData);
     }
 }
